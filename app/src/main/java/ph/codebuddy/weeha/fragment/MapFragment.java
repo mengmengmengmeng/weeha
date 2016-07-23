@@ -1,12 +1,9 @@
 package ph.codebuddy.weeha.fragment;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,12 +42,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
 
-        mapFragment.getMapAsync(this);
-
-        return view;
-    }
-
-    private void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
@@ -83,7 +74,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .build();
 
         mGoogleApiClient.connect();
+
+        mapFragment.getMapAsync(this);
+
+        return view;
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -93,6 +89,5 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(manila, 13));
 
         mMap.setMyLocationEnabled(true);
-        buildGoogleApiClient();
     }
 }
