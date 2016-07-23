@@ -15,6 +15,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 import ph.codebuddy.weeha.R;
 
+/**
+ * Created by rommeldavid on 23/07/16.
+ */
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 

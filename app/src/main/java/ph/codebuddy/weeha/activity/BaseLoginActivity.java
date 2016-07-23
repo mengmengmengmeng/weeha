@@ -10,6 +10,7 @@ import ph.codebuddy.weeha.R;
 /**
  * Created by rommeldavid on 23/07/16.
  */
+
 public class BaseLoginActivity extends AppCompatActivity {
     SharedPreferences preferences;
 
