@@ -1,0 +1,127 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/second_screen_bg"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/etMobileNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your Mobile Number"
+            android:textColorHint="@color/grey"
+            android:layout_margin="5dp"
+            android:textSize="16sp"
+            android:padding="15dp"
+            android:inputType="number"
+            android:singleLine="true"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/etFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your First Name"
+            android:textColorHint="@color/grey"
+            android:layout_margin="5dp"
+            android:textSize="16sp"
+            android:padding="15dp"
+            android:singleLine="true"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/etLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your Last Name"
+            android:textColorHint="@color/grey"
+            android:layout_margin="5dp"
+            android:textSize="16sp"
+            android:padding="15dp"
+            android:singleLine="true"/>
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your Username"
+            android:textColorHint="@color/grey"
+            android:layout_margin="5dp"
+            android:textSize="16sp"
+            android:padding="15dp"
+            android:singleLine="true"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="SEND ME A CODE"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_rounded_corner_orange"
+            android:textSize="16sp"
+            android:elevation="2dp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center_horizontal">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:id="@+id/layoutRedirectLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:textSize="18sp"
+                android:text="Already have an account? "/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingRight="20dp"
+                android:textSize="18sp"
+                android:text="Login Now!"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

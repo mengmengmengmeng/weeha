@@ -4,13 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 
 import ph.codebuddy.weeha.R;
 
@@ -18,16 +16,12 @@ import ph.codebuddy.weeha.R;
  * Created by rommeldavid on 23/07/16.
  */
 
-public class SplashActivity extends AppCompatActivity {
-
-    SharedPreferences preferences;
-
+public class SplashActivity extends BaseLoginActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        preferences = getSharedPreferences("WEEHA_PREFS", Context.MODE_PRIVATE);
         requestFineLocation(this);
 
     }
