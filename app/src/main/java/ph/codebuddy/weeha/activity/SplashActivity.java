@@ -85,12 +85,12 @@ public class SplashActivity extends BaseLoginActivity {
     }
 
     public void goToLogin(){
-        if(preferences.getString("USER_DETAILS", "").equals("")){
+        if(preferences.getString("access_token", "").length() == 0){
             Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         }else{
-            Intent intent = new Intent(SplashActivity.this, MapsActivity.class);
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }

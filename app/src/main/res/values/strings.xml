@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">weeha</string>
     <string name="title_activity_maps">weeha</string>
-    <string name="weeha_url">http://192.168.170.10:3000/</string>
+    <string name="weeha_url">http://192.168.167.44:3000/</string>
 </resources>

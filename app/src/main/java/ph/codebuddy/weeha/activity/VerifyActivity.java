@@ -67,7 +67,7 @@ public class VerifyActivity extends BaseLoginActivity {
             public void onTaskCompleted(Boolean bool, String response) {
                 if (bool) {
                     try {
-                        Intent intent = new Intent(VerifyActivity.this, MapsActivity.class);
+                        Intent intent = new Intent(VerifyActivity.this, MainActivity.class);
                         JSONObject data = new JSONObject(response);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("current_id", data.getString("id"));
