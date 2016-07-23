@@ -75,6 +75,19 @@
         </activity>
 
         <activity
+            android:name=".activity.VerifyActivity"
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme"
+            android:windowSoftInputMode="adjustPan">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity
             android:name=".activity.MapsActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait"
