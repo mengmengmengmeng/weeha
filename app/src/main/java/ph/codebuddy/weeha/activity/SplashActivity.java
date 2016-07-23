@@ -29,7 +29,6 @@ public class SplashActivity extends AppCompatActivity {
 
         preferences = getSharedPreferences("WEEHA_PREFS", Context.MODE_PRIVATE);
         requestFineLocation(this);
-        requestCoarseLocation(this);
 
     }
 
