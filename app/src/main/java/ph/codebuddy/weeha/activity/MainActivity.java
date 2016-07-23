@@ -72,15 +72,19 @@ public class MainActivity extends BaseActivity {
                 if(position == 0){
                     setPages(VISIBLE, GONE, GONE, VISIBLE, GONE, VISIBLE, GONE, VISIBLE);
                     mapLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
+                    setToolbarName(" Map");
                 }else if(position == 1){
                     setPages(GONE, VISIBLE, VISIBLE, GONE, GONE, VISIBLE, GONE, VISIBLE);
                     trackLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
+                    setToolbarName(" Track");
                 }else if(position == 2){
                     setPages(GONE, VISIBLE, GONE, VISIBLE, VISIBLE, GONE, GONE, VISIBLE);
                     groupLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
+                    setToolbarName(" Group");
                 }else if(position == 3){
                     setPages(GONE, VISIBLE, GONE, VISIBLE, GONE, VISIBLE, VISIBLE, GONE);
                     settingLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
+                    setToolbarName(" Setting");
                 }
             }
 
@@ -91,6 +95,7 @@ public class MainActivity extends BaseActivity {
         });
 
         mainViewPager.setCurrentItem(0, false);
+        setToolbarName(" Map");
         setPages(VISIBLE, GONE, GONE, VISIBLE, GONE, VISIBLE, GONE, VISIBLE);
         mapLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
 
@@ -98,7 +103,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 mainViewPager.setCurrentItem(0, false);
-                setToolbarName("Map");
             }
         });
 
@@ -106,7 +110,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 mainViewPager.setCurrentItem(1, false);
-                setToolbarName("Track");
             }
         });
 
@@ -114,7 +117,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 mainViewPager.setCurrentItem(2, false);
-                setToolbarName("Group");
             }
         });
 
@@ -122,7 +124,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 mainViewPager.setCurrentItem(3, false);
-                setToolbarName("Setting");
             }
         });
     }
