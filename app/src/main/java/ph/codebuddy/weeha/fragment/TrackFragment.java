@@ -25,6 +25,7 @@ import java.util.List;
 import ph.codebuddy.weeha.R;
 import ph.codebuddy.weeha.adapter.TrackRecommendedAdapter;
 import ph.codebuddy.weeha.adapter.TrackRequestAdapter;
+import ph.codebuddy.weeha.adapter.TrackedContactsAdapter;
 import ph.codebuddy.weeha.model.TrackRequest;
 import ph.codebuddy.weeha.request.GetTrackRequest;
 import ph.codebuddy.weeha.request.OnTaskCompleted;
@@ -38,14 +39,16 @@ public class TrackFragment extends Fragment {
     }
 
 
-    RecyclerView recyclerView, recyclerView2;
-    LinearLayoutManager linearLayoutManager, linearLayoutManager2;
+    RecyclerView recyclerView, recyclerView2, recyclerView3;
+    LinearLayoutManager linearLayoutManager, linearLayoutManager2, linearLayoutManager3;
     TrackRequestAdapter trackRequestAdapter;
     TrackRecommendedAdapter trackRecommendedAdapter;
-    LinearLayout layoutRequest, layoutRecommended;
+    TrackedContactsAdapter trackedContactsAdapter;
+    LinearLayout layoutRequest, layoutRecommended, layoutTrackedContacts;
     SharedPreferences sharedPreferences;
     ArrayList<TrackRequest> trackList = new ArrayList<>();
     ArrayList<TrackRequest> trackRecommended = new ArrayList<>();
+    ArrayList<TrackRequest> trackedContacts = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,14 +75,25 @@ public class TrackFragment extends Fragment {
         recyclerView2.setLayoutManager(linearLayoutManager2);
         recyclerView2.setItemAnimator(new DefaultItemAnimator());
 
-        trackRecommendedAdapter = new TrackRecommendedAdapter(trackRecommended, getActivity());
+        trackRecommendedAdapter = new TrackRecommendedAdapter(trackRecommended, getActivity(), sharedPreferences);
 
         recyclerView2.setAdapter(trackRecommendedAdapter);
+
+        linearLayoutManager3 = new LinearLayoutManager(getActivity());
+        recyclerView3 = (RecyclerView) view.findViewById(R.id.recyclerViewTracked);
+        layoutTrackedContacts = (LinearLayout) view.findViewById(R.id.layoutTrackedContacts);
+
+        recyclerView3.setLayoutManager(linearLayoutManager3);
+        recyclerView3.setItemAnimator(new DefaultItemAnimator());
+
+        trackedContactsAdapter = new TrackedContactsAdapter(trackedContacts, getActivity());
+
+        recyclerView3.setAdapter(trackedContactsAdapter);
 
         GetTrackRequest getTrackRequest = new GetTrackRequest(getActivity(), "relationships/pending_requests", sharedPreferences, new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(Boolean bool, String response) {
-                Log.v(String.valueOf(bool), response);
+                Log.v(String.valueOf(bool) + "pending ", response);
 
                 try {
                     TrackRequest trackRequest = new TrackRequest();
@@ -89,9 +103,10 @@ public class TrackFragment extends Fragment {
                     }
                     for(int i = 0; i<users.length(); i++){
                         JSONObject user = users.getJSONObject(i);
+                        JSONObject follower = user.getJSONObject("follower");
                         trackRequest.setTrackRequest(user.getString("id"),
-                                user.getString("first_name"),
-                                user.getString("last_name"),
+                                follower.getString("first_name"),
+                                follower.getString("last_name"),
                                 "http://www.anglia.ac.uk/~/media/Images/Staff%20Profiles/placeholder-profile.jpg");
 
                         trackList.add(trackRequest);
@@ -138,8 +153,41 @@ public class TrackFragment extends Fragment {
             }
         });
 
+        GetTrackRequest getTrackedContacts = new GetTrackRequest(getActivity(), "following", sharedPreferences, new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(Boolean bool, String response) {
+                Log.v(String.valueOf(bool), response);
+
+                try {
+                    TrackRequest trackRequest = new TrackRequest();
+                    JSONArray users = new JSONArray(response);
+                    if(users.length() == 0){
+                        layoutTrackedContacts.setVisibility(View.GONE);
+                    }
+                    for(int i = 0; i<users.length(); i++){
+                        JSONObject user = users.getJSONObject(i);
+                        trackRequest.setTrackRequest(user.getString("id"),
+                                user.getString("first_name"),
+                                user.getString("last_name"),
+                                "http://www.anglia.ac.uk/~/media/Images/Staff%20Profiles/placeholder-profile.jpg");
+
+                        trackedContacts.add(trackRequest);
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                trackedContactsAdapter.notifyDataSetChanged();
+
+            }
+        });
+
+
         getTrackRequest.executeGetTrackRequest();
         getTrackRecommended.executeGetTrackRequest();
+        getTrackedContacts.executeGetTrackRequest();
 
         return view;
     }

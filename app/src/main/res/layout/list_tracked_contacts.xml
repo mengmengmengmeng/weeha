@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".2">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/rivAvatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="1dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder_user"
+            app:riv_border_color="@color/colorPrimaryDark"
+            app:riv_border_width="1dip"
+            app:riv_oval="true"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvJoinerName"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".7"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:textColor="@color/colorPrimary"
+        android:text="Name here"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/track"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".1"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/track_btn"/>
+
+</LinearLayout>
