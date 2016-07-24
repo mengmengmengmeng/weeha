@@ -1,5 +1,9 @@
 package ph.codebuddy.weeha.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +14,7 @@ import android.widget.LinearLayout;
 
 import ph.codebuddy.weeha.NonSwipeableViewPager;
 import ph.codebuddy.weeha.R;
+import ph.codebuddy.weeha.SendLocationsService;
 import ph.codebuddy.weeha.adapter.MainPagerAdapter;
 
 /**
@@ -47,6 +52,9 @@ public class MainActivity extends BaseActivity {
         mainViewPager = (NonSwipeableViewPager) findViewById(R.id.main_pager);
         mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+
+        Intent i = new Intent(this, SendLocationsService.class);
+        startService(i);
 
         setUpDisplay();
 

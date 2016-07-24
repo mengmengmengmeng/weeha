@@ -6,46 +6,44 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
-import ph.codebuddy.weeha.R;
 import ph.codebuddy.weeha.https.HttpRequest;
 
 /**
  * Created by rommeldavid on 24/07/16.
  */
-public class GetTrackRequest {
+public class GetMyLocation {
     Context context;
     SharedPreferences spUtils;
     private OnTaskCompleted listener;
-    String addUrl;
     public static String TAG = "[Request code..]";
 
-    public GetTrackRequest(Context context, String url,SharedPreferences spUtils, OnTaskCompleted listener) {
+    public GetMyLocation(Context context, SharedPreferences spUtils, OnTaskCompleted listener) {
         this.context = context;
         this.spUtils = spUtils;
         this.listener = listener;
-        this.addUrl = url;
     }
 
-    public void executeGetTrackRequest() {
+    public void executeGetLocation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            new getTrackRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new getLocation().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
-            new getTrackRequest().execute();
+            new getLocation().execute();
         }
     }
 
-    public class getTrackRequest extends AsyncTask<String, Integer, Boolean> {
+    public class getLocation extends AsyncTask<String, Integer, Boolean> {
         Boolean asyncResult;
         String stringResult;
 
         @Override
         protected Boolean doInBackground(String... params) {
             HttpRequest httpRequest = new HttpRequest();
-            String url = context.getString(R.string.weeha_url) + addUrl;
+            String url = "https://devapi.globelabs.com.ph/location/v1/queries/location?access_token=" +
+                    spUtils.getString("access_token", "") + "&address=" + spUtils.getString("mobile_number", "") + "&requestedAccuracy=metres";
 
-            stringResult = httpRequest.makeServiceCall(url, HttpRequest.GET, spUtils.getString("access_token", ""));
+            stringResult = httpRequest.makeServiceCall(url, HttpRequest.GET, "");
 
-            Log.v("REGSSS", stringResult);
+            Log.v("YEAH", stringResult);
 
             return true;
         }
