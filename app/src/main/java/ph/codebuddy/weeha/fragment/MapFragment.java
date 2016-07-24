@@ -20,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -64,7 +65,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                                 lng = Double.parseDouble(sharedPreferences.getString("tracked_lng", ""));
                                 String name_marker = sharedPreferences.getString("tracked_name", "");
                                 LatLng loc = new LatLng(lat, lng);
-                                mMap.addMarker(new MarkerOptions().position(loc).title(name_marker));
+                                mMap.addMarker(new MarkerOptions().
+                                        position(loc).
+                                        title(name_marker).
+                                        icon(BitmapDescriptorFactory.fromResource(R.drawable.gps_pin_icon)));
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc ,15));
                             }else{
