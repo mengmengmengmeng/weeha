@@ -1,9 +1,12 @@
 package ph.codebuddy.weeha.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +14,25 @@ import android.view.ViewGroup;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import ph.codebuddy.weeha.R;
+import ph.codebuddy.weeha.activity.MainActivity;
 import ph.codebuddy.weeha.model.TrackRequest;
+import ph.codebuddy.weeha.model.TrackedContacts;
 
 /**
  * Created by rommeldavid on 24/07/16.
  */
 public class TrackedContactsAdapter extends RecyclerView.Adapter<TrackedContactsAdapter.ViewAllJoinersHolder> {
-    ArrayList<TrackRequest> trackRequests;
+    ArrayList<TrackedContacts> trackRequests;
     Context context;
 
-    public TrackedContactsAdapter(ArrayList<TrackRequest> list, Context context){
+    public TrackedContactsAdapter(ArrayList<TrackedContacts> list, Context context){
         this.trackRequests = list;
         this.context = context;
     }
@@ -36,7 +45,7 @@ public class TrackedContactsAdapter extends RecyclerView.Adapter<TrackedContacts
 
     @Override
     public void onBindViewHolder(ViewAllJoinersHolder holder, int position) {
-        TrackRequest current = trackRequests.get(position);
+        final TrackedContacts current = trackRequests.get(position);
 
         holder.tvJoinerName.setText(current.getFullName());
         Picasso.with(context).load(current.getAvatar()).placeholder(R.drawable.placeholder_user).into(holder.rivAvatar);
@@ -44,7 +53,20 @@ public class TrackedContactsAdapter extends RecyclerView.Adapter<TrackedContacts
         holder.ivTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.v("TAGGGG", current.getLocations());
+                try {
+                    JSONArray locations = new JSONArray(current.getLocations());
+                    JSONObject lastLocation = new JSONObject(locations.get(locations.length()-1).toString());
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra("tracked_lat", lastLocation.getString("lat"));
+                    intent.putExtra("tracked_lng", lastLocation.getString("lng"));
+                    intent.putExtra("tracked_name", current.getFullName());
+                    ((Activity)context).finish();
+                    context.startActivity(intent);
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

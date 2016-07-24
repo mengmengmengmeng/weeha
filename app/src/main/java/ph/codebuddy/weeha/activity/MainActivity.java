@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
@@ -30,10 +31,19 @@ public class MainActivity extends BaseActivity {
     AppBarLayout appBarLayout;
     public static int VISIBLE = 0;
     public static int GONE = 8;
+    Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("tracked_lat", "");
+        editor.putString("tracked_lng", "");
+        editor.putString("tracked_name", "");
+        editor.apply();
+
+        extras = getIntent().getExtras();
+        checkIfTracked();
 
         mapLayout = (LinearLayout) findViewById(R.id.mapLayout);
         trackLayout = (LinearLayout) findViewById(R.id.trackLayout);
@@ -63,6 +73,29 @@ public class MainActivity extends BaseActivity {
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_main;
+    }
+
+    public void checkIfTracked(){
+        try {
+            if(extras.getString("tracked_lat") != null){
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("tracked_lat", extras.getString("tracked_lat"));
+                editor.putString("tracked_lng", extras.getString("tracked_lng"));
+                editor.putString("tracked_name", extras.getString("tracked_name"));
+                editor.apply();
+            }
+        } catch (NullPointerException e ) {
+
+        }
+
+
+    }
+
+    public void goToMapAndLocate(){
+        mainViewPager.setCurrentItem(0, false);
+        setToolbarName(" Map");
+        setPages(VISIBLE, GONE, GONE, VISIBLE, GONE, VISIBLE, GONE, VISIBLE);
+        mapLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
     }
 
     public void setUpDisplay() {
@@ -102,10 +135,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        mainViewPager.setCurrentItem(0, false);
-        setToolbarName(" Map");
-        setPages(VISIBLE, GONE, GONE, VISIBLE, GONE, VISIBLE, GONE, VISIBLE);
-        mapLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
+        goToMapAndLocate();
 
         mapLayout.setOnClickListener(new View.OnClickListener() {
             @Override

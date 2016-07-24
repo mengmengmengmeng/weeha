@@ -42,8 +42,7 @@ public class SendLocationsService extends Service{
 
 
     @Override
-    public IBinder onBind(Intent intent)
-    {
+    public IBinder onBind(Intent intent) {
         return null;
     }
 
@@ -87,8 +86,7 @@ public class SendLocationsService extends Service{
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
     }
 

@@ -27,6 +27,7 @@ import ph.codebuddy.weeha.adapter.TrackRecommendedAdapter;
 import ph.codebuddy.weeha.adapter.TrackRequestAdapter;
 import ph.codebuddy.weeha.adapter.TrackedContactsAdapter;
 import ph.codebuddy.weeha.model.TrackRequest;
+import ph.codebuddy.weeha.model.TrackedContacts;
 import ph.codebuddy.weeha.request.GetTrackRequest;
 import ph.codebuddy.weeha.request.OnTaskCompleted;
 
@@ -48,7 +49,7 @@ public class TrackFragment extends Fragment {
     SharedPreferences sharedPreferences;
     ArrayList<TrackRequest> trackList = new ArrayList<>();
     ArrayList<TrackRequest> trackRecommended = new ArrayList<>();
-    ArrayList<TrackRequest> trackedContacts = new ArrayList<>();
+    ArrayList<TrackedContacts> trackedContacts = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -159,7 +160,7 @@ public class TrackFragment extends Fragment {
                 Log.v(String.valueOf(bool), response);
 
                 try {
-                    TrackRequest trackRequest = new TrackRequest();
+                    TrackedContacts tcontacts = new TrackedContacts();
                     JSONArray users = new JSONArray(response);
                     if(users.length() == 0){
                         layoutTrackedContacts.setVisibility(View.GONE);
@@ -167,12 +168,13 @@ public class TrackFragment extends Fragment {
                     for(int i = 0; i<users.length(); i++){
                         JSONObject user = users.getJSONObject(i);
                         JSONObject followed = user.getJSONObject("followed");
-                        trackRequest.setTrackRequest(user.getString("id"),
+                        tcontacts.setTrackedContacts(user.getString("id"),
                                 followed.getString("first_name"),
                                 followed.getString("last_name"),
-                                "http://www.anglia.ac.uk/~/media/Images/Staff%20Profiles/placeholder-profile.jpg");
+                                "http://www.anglia.ac.uk/~/media/Images/Staff%20Profiles/placeholder-profile.jpg",
+                                followed.getString("locations"));
 
-                        trackedContacts.add(trackRequest);
+                        trackedContacts.add(tcontacts);
 
                     }
 

@@ -1,6 +1,8 @@
 package ph.codebuddy.weeha.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import ph.codebuddy.weeha.R;
 
@@ -31,6 +34,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     protected GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     double lat = 14.598152, lng = 120.9446317;
+    SharedPreferences sharedPreferences;
 
     public MapFragment() {
     }
@@ -43,6 +47,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
 
+        sharedPreferences = getActivity().getSharedPreferences("WEEHA_PREFS", Context.MODE_PRIVATE);
+
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
@@ -53,10 +59,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             lat = mLastLocation.getLatitude();
                             lng = mLastLocation.getLongitude();
 
-                            LatLng loc = new LatLng(lat, lng);
-                            //mMap.addMarker(new MarkerOptions().position(loc).title("New Marker"));
-                            //mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc ,15));
+                            if(!sharedPreferences.getString("tracked_lat", "").equals("")){
+                                lat = Double.parseDouble(sharedPreferences.getString("tracked_lat", ""));
+                                lng = Double.parseDouble(sharedPreferences.getString("tracked_lng", ""));
+                                String name_marker = sharedPreferences.getString("tracked_name", "");
+                                LatLng loc = new LatLng(lat, lng);
+                                mMap.addMarker(new MarkerOptions().position(loc).title(name_marker));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc ,15));
+                            }else{
+                                LatLng loc = new LatLng(lat, lng);
+                                //mMap.addMarker(new MarkerOptions().position(loc).title("New Marker"));
+                                //mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc ,15));
+                            }
+
                         }
                     }
 
