@@ -64,7 +64,7 @@ public class TrackFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        trackRequestAdapter = new TrackRequestAdapter(trackList, getActivity());
+        trackRequestAdapter = new TrackRequestAdapter(trackList, getActivity(), sharedPreferences);
 
         recyclerView.setAdapter(trackRequestAdapter);
 
@@ -166,9 +166,10 @@ public class TrackFragment extends Fragment {
                     }
                     for(int i = 0; i<users.length(); i++){
                         JSONObject user = users.getJSONObject(i);
+                        JSONObject followed = user.getJSONObject("followed");
                         trackRequest.setTrackRequest(user.getString("id"),
-                                user.getString("first_name"),
-                                user.getString("last_name"),
+                                followed.getString("first_name"),
+                                followed.getString("last_name"),
                                 "http://www.anglia.ac.uk/~/media/Images/Staff%20Profiles/placeholder-profile.jpg");
 
                         trackedContacts.add(trackRequest);
